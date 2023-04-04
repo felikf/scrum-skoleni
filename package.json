@@ -2,11 +2,12 @@
   "name": "scrum-team-2",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node index.ts",
+    "start": "ts-node src/index.ts",
     "test": "mocha",
-    "cucumber": "cucumber-js"
+    "cucumber": "cucumber-js",
+    "start": "tsc && node dist/index"
   },
   "repository": {
     "type": "https",

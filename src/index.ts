@@ -1,64 +1,11 @@
-type Board = Cell[][];
+import { Ship } from './model/ship'
+import { ShipPlacement } from "./model/ship-placement";
+import { Player } from "./model/player";
+import { Board } from "./model/board";
+import { Cell } from "./model/cell";
 
-class Ship {
-    size: number
-    constructor(size: number, type: string) {
-        this.size = size
-    }
-}
-
-class ShipPlacement {
-    x: number
-    y: number
-    constructor(x: number, y: number) {
-        this.x = x
-        this.y = y
-    }
-}
-
-class Fire {
-    x: number
-    y: number
-    constructor(x: number, y: number) {
-        this.x = x
-        this.y = y
-    }
-}
-
-class Player {
-    ship: Ship
-
-    shipPlacement: ShipPlacement
-
-    constructor(ship: Ship, shipPlacement: ShipPlacement) {
-        this.ship = ship;
-        this.shipPlacement = shipPlacement;
-    }
-}
-
-class Cell {
-
-    ship: Ship;
-
-    firedAtCell: boolean
-
-
-    constructor(ship: Ship) {
-        this.ship = ship
-    }
-
-    toString(): string {
-        if (this.ship && this.firedAtCell) {
-            return 'X'
-        } else if (this.ship && !this.firedAtCell) {
-            return 'o'
-        } else if (this.firedAtCell) {
-            return '_'
-        }
-
-        return '.'
-    }
-}
+let board: Board;
+let aiBoard: Board;
 
 function showTitle() {
     console.log('Battleship (also known as Battleships or Sea Battle[1]) is a strategy type guessing game for two players. It is played on ruled grids (paper or board) on which each player\'s fleet of warships are marked. The locations of the fleets are concealed from the other player. Players alternate turns calling "shots" at the other player\'s ships, and the objective of the game is to destroy the opposing player\'s fleet.');
@@ -71,7 +18,9 @@ function createBoard(player: Player): Board {
         for (let x: number = 0; x < 10; x++) {
 
             if (x === player.shipPlacement.x && ( y === player.shipPlacement.y ||  y === player.shipPlacement.y + player.ship.size - 1 )) {
-                result[y][x] = new Cell(player.ship);
+                let cell = new Cell(player.ship);
+                result[y][x] = cell;
+                player.ship.addCell(cell);
             } else {
                 result[y][x] = new Cell(null);
             }
@@ -95,9 +44,6 @@ function printBoard(result: Board): void {
 
     // console.table(board)
 }
-
-let board: Board;
-let aiBoard: Board;
 
 function startGame() {
     showTitle();
