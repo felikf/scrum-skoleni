@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
+    "run": "npm run start",
     "start": "tsc && node dist/index",
     "test": "jest",
     "cucumber": "cucumber-js"
